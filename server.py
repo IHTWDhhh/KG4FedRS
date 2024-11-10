@@ -134,11 +134,11 @@ class server():
         uid_item=[(user.id_self,user.likeitems) for user in users]
         return uid_item
     def train(self):
-        parameter_list = []
         """服务端 将全局模型分发给选择训练的本地模型 只有被选择训练了的客户端才能够借助全局模型更新本地模型"""
         shuffled_list = self.user_list.copy()  # 复制列表以避免修改原始列表
         random.shuffle(shuffled_list)
         for users in self.choose_user_client(shuffled_list,self.batch_size):
+            parameter_list = []
             self.distribute(users)
             """开始本地训练"""
             for user in users:
